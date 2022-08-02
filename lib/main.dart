@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(primaryColor: Colors.black),
-      home: new HomePage(),
+    return MaterialApp(
+      theme: ThemeData(primaryColor: const Color.fromARGB(255, 243, 86, 33)),
+      home: HomePage(),
     );
   }
 }

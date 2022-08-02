@@ -6,12 +6,13 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  List<List> matrix;
+  final List<List> matrix = <List>[];
   var player1;
   var player2;
 
-  // constructor
-  _GameBoardState() {
+  @override
+  void initState() {
+    super.initState();
     _createMatrix();
   }
 
@@ -19,12 +20,13 @@ class _GameBoardState extends State<GameBoard> {
     player1 = 0;
     player2 = 0;
     size = 0;
-    matrix = List<List>(3);
-    for (int i = 0; i < matrix.length; i++) {
-      matrix[i] = List(3);
-      for (int j = 0; j < matrix[0].length; j++) {
-        matrix[i][j] = ' ';
+    matrix.clear();
+    for (int i = 0; i < 3; i++) {
+      final _list = [];
+      for (int j = 0; j < 3; j++) {
+        _list.add(' ');
       }
+      matrix.add(_list);
     }
   }
 
@@ -87,25 +89,25 @@ class _GameBoardState extends State<GameBoard> {
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _topLeft(0, 0),
-          _topMiddle(0, 1),
-          _topRight(0, 2),
+          _createCell(0, 0),
+          _createCell(0, 1),
+          _createCell(0, 2),
         ],
       ),
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _middleLeft(1, 0),
-          _middleMiddle(1, 1),
-          _middleRight(1, 2),
+          _createCell(1, 0),
+          _createCell(1, 1),
+          _createCell(1, 2),
         ],
       ),
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _bottomLeft(2, 0),
-          _bottomMiddle(2, 1),
-          _bottomRight(2, 2),
+          _createCell(2, 0),
+          _createCell(2, 1),
+          _createCell(2, 2),
         ],
       ),
     ])));
@@ -113,7 +115,7 @@ class _GameBoardState extends State<GameBoard> {
 
   var size = 0;
   String _lastChar = ' ';
-  _topLeft(int i, int j) {
+  _createCell(int i, int j) {
     return GestureDetector(
         onTap: () {
           _changeBoard(i, j);
@@ -127,201 +129,12 @@ class _GameBoardState extends State<GameBoard> {
         child: Container(
             width: 120,
             height: 120,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
+                color: Colors.red,
                 border: Border(
-              right: BorderSide(),
-              bottom: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _topMiddle(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              right: BorderSide(),
-              left: BorderSide(),
-              bottom: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _topRight(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              left: BorderSide(),
-              bottom: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _middleLeft(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(),
-              right: BorderSide(),
-              bottom: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _middleMiddle(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(),
-              left: BorderSide(),
-              right: BorderSide(),
-              bottom: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _middleRight(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(),
-              left: BorderSide(),
-              bottom: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _bottomMiddle(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(),
-              left: BorderSide(),
-              right: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _bottomLeft(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(),
-              right: BorderSide(),
-            )),
-            child: Center(
-                child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
-  }
-
-  _bottomRight(int i, int j) {
-    return GestureDetector(
-        onTap: () {
-          _changeBoard(i, j);
-          _checkWinner(i, j);
-          _calculateScore(i, j);
-          size++;
-          if (size == 9) {
-            _printTieGame();
-          }
-        },
-        child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(),
-              left: BorderSide(),
-            )),
+                  right: BorderSide(),
+                  bottom: BorderSide(),
+                )),
             child: Center(
                 child: Text(matrix[i][j], style: TextStyle(fontSize: 92)))));
   }
@@ -382,7 +195,7 @@ class _GameBoardState extends State<GameBoard> {
         builder: (context) {
           return AlertDialog(
             title: Text("It's a Tie!"),
-            content: Text("Click to reset game."),
+            content: Text("Click to Play Again."),
             actions: <Widget>[
               FlatButton(
                   child: Text("Reset Button"),
@@ -406,7 +219,7 @@ class _GameBoardState extends State<GameBoard> {
             content: Text("$winner won"),
             actions: <Widget>[
               FlatButton(
-                child: Text("Reset Game"),
+                child: Text("Play Again"),
                 onPressed: () {
                   Navigator.of(context).pop();
                   setState(() {
